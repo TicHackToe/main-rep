@@ -6,6 +6,15 @@
       <span v-else-if="draw"> It's A Draw </span>
       <span v-else>It's {{ players }} turn</span>
     </div>
+    <!-- <div class="row" v-for="room in boards" :key="room.id">
+      <Board
+        v-for="(square, i) in room.board"
+        :key="i"
+        :data="square"
+        @tellPosition="fillBoard(i)"
+      />
+      {{ room.board }}
+    </div> -->
     <div class="row">
       <Board
         v-for="(data, i) in datas"
@@ -24,13 +33,30 @@ import checkForWin from "../utils/winningCondition";
 
 export default {
   name: "Home",
+  // data() {
+  //   return {
+  //     boards: []
+  //   }
+  // },
   components: {
     Board,
     checkForWin,
   },
+  created() {
+    // this.$socket.
+    console.log(this.boards);
+  },
+  sockets: {
+    init(payload) {
+      this.$store.dispatch('populateBoards', payload)
+    }
+  },
   methods: {
     fillBoard(position) {
-      this.$store.dispatch("fillBoard", {position, winner : this.winner.player});
+      // emit ke server
+      this.$socket.emit('updateBoard', {position, currentPlayer: this.players})
+
+      this.$store.dispatch("fillBoard", {position, boardId: this.boards , winner : this.winner.player});
     },
   },
   computed: {
@@ -39,6 +65,12 @@ export default {
     },
     draw() {
       return this.datas.filter(el => !el).length == 0
+    },
+    // getters
+    boards: {
+      get() {
+        return this.$store.state.boards;
+      }
     },
     datas: {
       get() {
