@@ -34,7 +34,8 @@ class SocketController {
         board.winner = null
         board.squares = Array(9).fill(null)
 
-        socket.broadcast.emit('updateBoard', payload)
+        socket.emit('init', SocketController.initialize())
+        // socket.broadcast.emit('updateBoard', payload)
     }
 }
 
