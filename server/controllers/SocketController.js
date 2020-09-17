@@ -1,4 +1,4 @@
-const { board, players, stats } = require('../config/store')
+const { board, players, stats } = require('../config/store');
 
 class SocketController {
     // public event listeners
@@ -15,29 +15,26 @@ class SocketController {
     static deletePlayer(payload, socket){
         players = players.filter(player => player.socketId !== socket.id)
     }
-    
-    static createRoom(payload, socket){
-        //
-    }
-    
-    static addPlayerToRoom(payload, socket){
-        //
-    }
 
     // private event listeners
     
     static updateBoard(payload, socket){
-        board.squares[payload.position] = payload.currentPlayer
-        
+        console.log(payload, board);
+
+        if (!board.winner) {
+            board.squares[payload.position] = payload.currentPlayer
+
+            if (payload.player) board.winner = payload.player
+        }
+
         socket.broadcast.emit('updateBoard', payload)
     }
 
-    static declareWinner(payload, io){
-        //
-    }
+    static clearBoard(payload, socket){
+        board.winner = null
+        board.squares = Array(9).fill(null)
 
-    static deleteRoom(payload, io){
-        //
+        socket.broadcast.emit('updateBoard', payload)
     }
 }
 
