@@ -5,24 +5,46 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    boardData: Array(9).fill(null),
-    player: "X"
+    boardData: [],
+
+    currentPlayer: '',
+    player: "X",
+
+    players: [],
+    stats: [],
+
   },
+  // setter
   mutations: {
     fill(state, position) {
       Vue.set(state.boardData, position, state.player)
     },
     player(state) {
       state.player = state.player == "X" ? "O" : "X"
+    },
+    boards(state, payload){
+      console.log(payload);
+      state.boardData = payload.squares
+    },
+    SOCKET_updateBoard(state, payload){
+      Vue.set(state.boardData, payload.position, payload.currentPlayer)
+      state.player = state.player == "X" ? "O" : "X"
+      console.log(payload);
     }
   },
+  // methods
   actions: {
     fillBoard(context, payload) {
       if(this.state.boardData[payload.position] != null || payload.winner != null){
         return
       }
+      console.log(payload);
       context.commit('fill', payload.position)
       context.commit('player')
+    },
+    populateBoards(context, payload) {
+      console.log(payload);
+      context.commit('boards', payload)
     }
   },
   modules: {
