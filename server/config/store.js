@@ -5,6 +5,7 @@ module.exports = {
         squares: Array(9).fill(null),
         xPlayerId: 1,
         oPlayerId: 2,
+        winner: null
     },
     players: [
         {
