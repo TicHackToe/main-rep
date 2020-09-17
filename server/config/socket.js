@@ -25,6 +25,8 @@ module.exports = {
 
         // event listeners on specific ID
 
+        socket.on('clearBoard', payload => SocketController.clearBoard(payload, socket))
+
         socket.on('updateBoard', payload => SocketController.updateBoard(payload, socket))
 
         socket.on('playerWins', payload => SocketController.declareWinner(payload, io))
