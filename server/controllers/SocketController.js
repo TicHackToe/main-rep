@@ -21,13 +21,13 @@ class SocketController {
     static updateBoard(payload, socket){
         console.log(payload, board);
 
-        // if (!board.winner) {
-        //     board.squares[payload.position] = payload.currentPlayer
+        if (!board.winner) {
+            board.squares[payload.position] = payload.currentPlayer
 
-        //     if (payload.winner) board.winner = payload.winner
+            if (payload.winner) board.winner = payload.winner
 
-        //     socket.broadcast.emit('updateBoard', payload)
-        // }
+            socket.broadcast.emit('updateBoard', payload)
+        }
 
         socket.broadcast.emit('updateBoard', payload)
     }
