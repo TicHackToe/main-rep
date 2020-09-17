@@ -24,9 +24,7 @@ class SocketController {
         if (!board.winner) {
             board.squares[payload.position] = payload.currentPlayer
 
-            if (payload.winner) board.winner = payload.winner
-
-            socket.broadcast.emit('updateBoard', payload)
+            if (payload.player) board.winner = payload.player
         }
 
         socket.broadcast.emit('updateBoard', payload)
