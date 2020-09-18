@@ -4,10 +4,19 @@ import router from './router'
 import store from './store'
 
 import VueSocketIO from 'vue-socket.io'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
 
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'https://tichacktoe-app.herokuapp.com',
+  connection: 'http://localhost:3000',
+  // connection: 'https://tichacktoe-app.herokuapp.com',
   vuex: {
       store,
       actionPrefix: 'SOCKET_',

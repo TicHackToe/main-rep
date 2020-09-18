@@ -27,13 +27,17 @@ export default new Vuex.Store({
       state.player = state.player == "X" ? "O" : "X"
     },
     boards(state, payload){
-      console.log(payload);
       state.boardData = payload.squares
     },
     SOCKET_updateBoard(state, payload){
       Vue.set(state.boardData, payload.position, payload.currentPlayer)
       state.player = state.player == "X" ? "O" : "X"
-      console.log(payload);
+    },
+    clearBoard(state) {
+      state.boardData = Array(9).fill(null)
+    },
+    fillPlayer(state, payload) {
+      state.players = payload
     }
   },
   // methods
@@ -42,13 +46,17 @@ export default new Vuex.Store({
       if(this.state.boardData[payload.position] != null || payload.winner != null){
         return
       }
-      console.log(payload);
       context.commit('fill', payload.position)
       context.commit('player')
     },
     populateBoards(context, payload) {
-      console.log(payload);
-      context.commit('boards', payload);
+      context.commit('boards', payload)
+    },
+    clearBoard(context) {
+      context.commit('clearBoard')
+    },
+    populatePlayers(context, payload) {
+      context.commit('fillPlayer', payload)
     }
   },
   modules: {
