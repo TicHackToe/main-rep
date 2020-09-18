@@ -44,7 +44,7 @@ export default new Vuex.Store({
     },
     populateBoards(context, payload) {
       console.log(payload);
-      context.commit('boards', payload)
+      context.commit('boards', payload);
     }
   },
   modules: {
