@@ -4,7 +4,7 @@ class SocketController {
     // public event listeners
 
     static initialize() {
-        return board
+        return { board, players }
     }
     
     static getUser() {
