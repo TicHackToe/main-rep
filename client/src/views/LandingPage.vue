@@ -1,17 +1,19 @@
 <template>
   <div class="inputName">
     <form @submit.prevent="login" class="form shadow">
+      <p v-if="playerCount > 1" style="color: red">The room is full, you cannot join.</p>
       <div>
         <input
           type="text"
           placeholder="Enter Your Name"
           class="form-control"
           v-model="name"
+          :disabled="playerCount > 1 ? true : false"
         />
       </div>
 
       <div>
-        <button class="btn btn-secondary" type="submit">Join The Game</button>
+        <button :class="playerCount > 1 ? 'btn-disabled' : 'btn-secondary'" class="btn" type="submit">Join The Game</button>
       </div>
     </form>
   </div>
@@ -44,9 +46,17 @@ export default {
     },
 
     init(payload) {
-      this.$store.dispatch("populateBoards", payload);  
+      this.$store.dispatch("populatePlayers", payload.players);
+      this.$store.dispatch("populateBoards", payload.board);
     }
   },
+  computed: {
+    playerCount: {
+      get() {
+        return this.$store.state.players.length
+      }
+    }
+  }
 };
 </script>
 
