@@ -26,12 +26,14 @@ export default new Vuex.Store({
       state.boardData = payload.squares
     },
     SOCKET_updateBoard(state, payload){
-      console.log('kena')
       Vue.set(state.boardData, payload.position, payload.currentPlayer)
       state.player = state.player == "X" ? "O" : "X"
     },
     clearBoard(state) {
       state.boardData = Array(9).fill(null)
+    },
+    fillPlayer(state, payload) {
+      state.players = payload
     }
   },
   // methods
@@ -48,6 +50,9 @@ export default new Vuex.Store({
     },
     clearBoard(context) {
       context.commit('clearBoard')
+    },
+    populateUsers(context, payload) {
+      context.commit('fillPlayer', payload)
     }
   },
   modules: {

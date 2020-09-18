@@ -1,11 +1,36 @@
 <template>
   <div class="container">
     <h1>TicHackToe</h1>
-    <div>
-      <span v-if="winner.player"> {{ winner.player }} Is The Winner </span>
-      <span v-else-if="draw"> It's A Draw </span>
-      <span v-else>{{ players }} turn</span>
+
+    <div v-if="players.length < 1">
+      <h4>Waiting For Other To Join</h4>
     </div>
+    <div v-else class="detail">
+      <div v-for="(player, index) in players" :key="player.id">
+        <div>
+          Player {{ index + 1 }} : {{ player.name }} Piece Is
+          {{ index == 1 ? "O" : "X" }}
+        </div>
+      </div>
+      <div>
+        <span v-if="winner.player">
+          <h4>
+            {{ winner.player == "X" ? players[0].name : players[1].name }} Is
+            The Winner
+          </h4>
+        </span>
+        <span v-else-if="draw"> It's A Draw </span>
+        <span v-else>
+          <h4>
+            {{
+              piece == "X" ? players[0].name : players[1].name || !winner.player
+            }}
+            turn
+          </h4></span
+        >
+      </div>
+    </div>
+
     <div class="row">
       <Board
         v-for="(data, i) in datas"
@@ -31,20 +56,24 @@ export default {
     Board,
     checkForWin,
   },
+  created() {},
   sockets: {
     init(payload) {
       this.$store.dispatch("populateBoards", payload);
     },
     afterClear(payload) {
       this.$store.dispatch("populateBoards", payload);
-    }
+    },
+    player(payload) {
+      this.$store.dispatch("populateUsers", payload);
+    },
   },
   methods: {
     fillBoard(position) {
       // emit ke server
       this.$socket.emit("updateBoard", {
         position,
-        currentPlayer: this.players,
+        currentPlayer: this.piece,
         winner: this.winner.player,
       });
 
@@ -55,9 +84,9 @@ export default {
       });
     },
     clearBoard() {
-      this.$store.dispatch("clearBoard")
-      this.$socket.emit("clearBoard")
-    }
+      this.$store.dispatch("clearBoard");
+      this.$socket.emit("clearBoard");
+    },
   },
   computed: {
     winner() {
@@ -78,6 +107,11 @@ export default {
       },
     },
     players: {
+      get() {
+        return this.$store.state.players;
+      },
+    },
+    piece: {
       get() {
         return this.$store.state.player;
       },
@@ -106,5 +140,10 @@ export default {
   font-weight: bold;
   border-radius: 10px;
   border: none;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
 }
 </style>

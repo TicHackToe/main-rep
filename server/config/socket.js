@@ -3,7 +3,7 @@ const SocketController = require('../controllers/SocketController')
 module.exports = {
     start: (io) => io.on('connection', (socket) => {
         console.log("a user connected");
-    
+
         // emit events
         // socket.emit('init', rooms)
     
@@ -16,6 +16,7 @@ module.exports = {
     
         // event listener
         socket.emit('init', SocketController.initialize())
+        socket.emit('player', SocketController.getUser())
 
         socket.on('newPlayer', payload => SocketController.createPlayer(payload, socket))
 
