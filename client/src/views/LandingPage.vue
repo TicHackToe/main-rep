@@ -29,6 +29,7 @@ export default {
   },
   methods: {
     login() {
+      this.$store.state.looseAudio.play()
       this.$socket.emit("newPlayer", {
         name: this.name,
       });
