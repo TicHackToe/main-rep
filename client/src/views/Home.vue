@@ -1,7 +1,5 @@
 <template>
   <div class="container">
-    <h1>TicHackToe</h1>
-
     <div v-if="players.length < 2">
       <h4>Waiting For Other To Join</h4>
     </div>

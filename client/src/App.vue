@@ -1,5 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="pt-4">
+    <h1>TicHackToe</h1>
+
     <router-view/>
   </div>
 </template>
