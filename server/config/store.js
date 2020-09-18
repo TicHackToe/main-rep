@@ -9,16 +9,7 @@ module.exports = {
         oPlayerId: 2,
         winner: null
     },
-    players: [
-        {
-            id: 1,
-            name: 'alpha',
-        },
-        {
-            id: 2,
-            name: 'beta',
-        }
-    ],
+    players: [],
     stats: {
         boardCount: 1,
         playerCount: 1
