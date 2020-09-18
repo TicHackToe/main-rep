@@ -44,9 +44,13 @@ export default {
     },
 
     init(payload) {
-      this.$store.dispatch("populateBoards", payload);  
+      this.$store.dispatch("populatePlayers", payload.board);
+      this.$store.dispatch("populateBoards", payload.players);
     }
   },
+  computed: {
+    // players: get()
+  }
 };
 </script>
 
