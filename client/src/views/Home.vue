@@ -12,6 +12,9 @@
       </div>
       <div>
         <span v-if="winner.player">
+          <p style="color:white;">
+            {{ $store.state.winAudio.play() }}
+          </p>
           <h4>
             {{ winner.player == "X" ? players[0].name : players[1].name }} Is
             The Winner
@@ -83,6 +86,7 @@ export default {
         boardId: this.boards,
         winner: this.winner.player,
       });
+      this.$store.state.moveAudio.play()
     },
     clearBoard() {
       this.$store.dispatch("clearBoard");
