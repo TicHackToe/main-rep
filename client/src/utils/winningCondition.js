@@ -10,14 +10,17 @@ const winningConditions = [
 ];
 
 const checkForWin = (squares) => {
+    let player = null
+
     for(let position of winningConditions) {
         const [ a, b, c ] = position
 
         if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return { player: squares[a], position }
+            player = squares[a]
         }
     }
-    return { player: null, position: [] }
+    // return sebagai object
+    return { player }
 }
 
 module.exports = checkForWin

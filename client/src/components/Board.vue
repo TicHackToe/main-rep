@@ -1,5 +1,9 @@
 <template>
-  <div class="squares" @click="tellPosition" :class="{'squares---x' : data === 'X', 'squares---o' : data === 'O'}">
+  <div
+    class="squares"
+    @click="tellPosition"
+    :class="{ 'squares---x': data === 'X', 'squares---o': data === 'O' }"
+  >
     <span class="text"> {{ data }} </span>
   </div>
 </template>
@@ -8,6 +12,11 @@
 export default {
   name: "HelloWorld",
   props: ["data"],
+  computed: {
+    playing() {
+      return localStorage.getItem("playerPlaying");
+    },
+  },
   methods: {
     tellPosition() {
       this.$emit("tellPosition");
@@ -49,19 +58,23 @@ export default {
 
 @-webkit-keyframes glow {
   from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #2470c7, 0 0 40px #2470c7, 0 0 50px #2470c7, 0 0 60px #2470c7, 0 0 70px #2470c7;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #2470c7,
+      0 0 40px #2470c7, 0 0 50px #2470c7, 0 0 60px #2470c7, 0 0 70px #2470c7;
   }
   to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #2470c7, 0 0 40px #2470c7, 0 0 50px #2470c7, 0 0 60px #2470c7, 0 0 70px #2470c7, 0 0 80px #2470c7;
+    text-shadow: 0 0 20px #fff, 0 0 30px #2470c7, 0 0 40px #2470c7,
+      0 0 50px #2470c7, 0 0 60px #2470c7, 0 0 70px #2470c7, 0 0 80px #2470c7;
   }
 }
 
 @-webkit-keyframes glaw {
   from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #b03743, 0 0 40px #b03743, 0 0 50px #b03743, 0 0 60px #b03743, 0 0 70px #b03743;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #b03743,
+      0 0 40px #b03743, 0 0 50px #b03743, 0 0 60px #b03743, 0 0 70px #b03743;
   }
   to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #b03743, 0 0 40px #b03743, 0 0 50px #b03743, 0 0 60px #b03743, 0 0 70px #b03743, 0 0 80px #b03743;
+    text-shadow: 0 0 20px #fff, 0 0 30px #b03743, 0 0 40px #b03743,
+      0 0 50px #b03743, 0 0 60px #b03743, 0 0 70px #b03743, 0 0 80px #b03743;
   }
 }
 </style>
