@@ -13,6 +13,10 @@ export default new Vuex.Store({
     players: [],
     stats: [],
 
+    moveAudio: new Audio('/aset/SPLAT2.wav'),
+    winAudio: new Audio('/aset/applause2.wav'),
+    looseAudio: new Audio('/aset/wlaugh.wav'),
+
   },
   // setter
   mutations: {
