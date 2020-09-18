@@ -56,7 +56,9 @@ export default {
     Board,
     checkForWin,
   },
-  created() {},
+  created() {
+    
+  },
   sockets: {
     init(payload) {
       this.$store.dispatch("populateBoards", payload);
@@ -65,8 +67,9 @@ export default {
       this.$store.dispatch("populateBoards", payload);
     },
     player(payload) {
-      this.$store.dispatch("populateUsers", payload);
-    },
+      console.log(payload, 'dari error');
+      this.$store.dispatch("populatePlayers", payload);
+    }
   },
   methods: {
     fillBoard(position) {

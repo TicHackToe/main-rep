@@ -2,7 +2,12 @@
   <div class="inputName">
     <form @submit.prevent="login" class="form shadow">
       <div>
-        <input type="text" placeholder="Enter Your Name" class="form-control" v-model="name">
+        <input
+          type="text"
+          placeholder="Enter Your Name"
+          class="form-control"
+          v-model="name"
+        />
       </div>
 
       <div>
@@ -17,31 +22,44 @@ export default {
   name: "LandingPage",
   data() {
     return {
-      name : ''
-    }
+      name: "",
+    };
   },
   methods: {
     login() {
       this.$socket.emit("newPlayer", {
-        name: this.name
-      })
-      localStorage.setItem('playerPlaying', this.name)
-      this.$router.push('/play')
+        name: this.name,
+      });
+    },
+  },
+  sockets: {
+    afterClear(board) {
+      this.$store.dispatch("populateBoards", board);
+    },
+
+    populatePlayer(player) {
+      this.$store.dispatch("populatePlayers", player);
+      localStorage.setItem("playerPlaying", this.name);
+      this.$router.push("/play");
+    },
+
+    init(payload) {
+      this.$store.dispatch("populateBoards", payload);  
     }
-  }
-}
+  },
+};
 </script>
 
 <style>
-  .form {
-    display: flex;
-    flex-direction: column;
-    width: 40em;
-    padding: 2em;
-    margin: 0 auto;
-  }
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 40em;
+  padding: 2em;
+  margin: 0 auto;
+}
 
-  .btn {
-    margin-top: 2em;
-  }
+.btn {
+  margin-top: 2em;
+}
 </style>

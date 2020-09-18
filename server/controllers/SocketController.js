@@ -13,12 +13,15 @@ class SocketController {
     }
 
     static createPlayer(payload, socket) {
-        if(players.length > 1) {
+        if(players.length >= 2) {
             return
         }
         payload.UserId = socket.id
         players.push(payload)
-        console.log(players, "List online players");
+
+        socket.emit('afterClear', board)
+        socket.emit('populatePlayer', players)
+        socket.emit('player', players)
     }
 
     static deletePlayer(payload, socket) {

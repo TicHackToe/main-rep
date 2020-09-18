@@ -16,6 +16,7 @@ module.exports = {
     
         // event listener
         socket.emit('init', SocketController.initialize())
+        
         socket.emit('player', SocketController.getUser())
 
         socket.on('newPlayer', payload => SocketController.createPlayer(payload, socket))

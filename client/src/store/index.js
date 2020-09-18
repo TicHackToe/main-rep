@@ -51,7 +51,7 @@ export default new Vuex.Store({
     clearBoard(context) {
       context.commit('clearBoard')
     },
-    populateUsers(context, payload) {
+    populatePlayers(context, payload) {
       context.commit('fillPlayer', payload)
     }
   },
