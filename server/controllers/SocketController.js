@@ -26,7 +26,7 @@ class SocketController {
 
             if (payload.player) board.winner = payload.player
         }
-
+        
         socket.broadcast.emit('updateBoard', payload)
     }
 
@@ -34,7 +34,7 @@ class SocketController {
         board.winner = null
         board.squares = Array(9).fill(null)
 
-        socket.broadcast.emit('updateBoard', payload)
+        socket.broadcast.emit('afterClear', board)
     }
 }
 

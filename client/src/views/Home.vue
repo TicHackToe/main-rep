@@ -6,14 +6,17 @@
       <span v-else-if="draw"> It's A Draw </span>
       <span v-else>{{ players }} turn</span>
     </div>
-      <div class="row">
-        <Board
-          v-for="(data, i) in datas"
-          :key="i"
-          :data="data"
-          @tellPosition="fillBoard(i)"
-        />
-      </div>
+    <div class="row">
+      <Board
+        v-for="(data, i) in datas"
+        :key="i"
+        :data="data"
+        @tellPosition="fillBoard(i)"
+      />
+    </div>
+    <div>
+      <button class="button-clear" @click="clearBoard">Clear Board</button>
+    </div>
   </div>
 </template>
 
@@ -28,14 +31,13 @@ export default {
     Board,
     checkForWin,
   },
-  created() {
-    // this.$socket.
-    console.log(this.boards);
-  },
   sockets: {
     init(payload) {
       this.$store.dispatch("populateBoards", payload);
     },
+    afterClear(payload) {
+      this.$store.dispatch("populateBoards", payload);
+    }
   },
   methods: {
     fillBoard(position) {
@@ -43,6 +45,7 @@ export default {
       this.$socket.emit("updateBoard", {
         position,
         currentPlayer: this.players,
+        winner: this.winner.player,
       });
 
       this.$store.dispatch("fillBoard", {
@@ -51,6 +54,10 @@ export default {
         winner: this.winner.player,
       });
     },
+    clearBoard() {
+      this.$store.dispatch("clearBoard")
+      this.$socket.emit("clearBoard")
+    }
   },
   computed: {
     winner() {
@@ -80,8 +87,7 @@ export default {
 </script>
 
 <style scoped>
-
-.row {  
+.row {
   width: 25em;
   display: grid;
   grid-template-columns: auto auto auto;
@@ -89,5 +95,16 @@ export default {
   margin: 0 auto;
   border-radius: 10px;
   background-color: #505e78;
+}
+
+.button-clear {
+  margin-top: 2em;
+  background-color: #1e2229;
+  color: white;
+  font-size: 20px;
+  padding: 0.6em;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
 }
 </style>
